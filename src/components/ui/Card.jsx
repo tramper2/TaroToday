@@ -15,9 +15,13 @@ const Card = ({
   return (
     <div
       onClick={onClick}
-      disabled={isDisabled}
+      role="button"
+      tabIndex={isDisabled ? -1 : 0}
+      onKeyPress={(e) => {
+        if (e.key === 'Enter' && !isDisabled) onClick();
+      }}
       className={`
-        relative w-24 h-36 sm:w-32 sm:h-48 md:w-40 md:h-56 lg:w-48 lg:h-64
+        relative w-24 h-36 sm:w-32 sm:h-48 md:w-40 md:h-60 lg:w-48 lg:h-72
         cursor-pointer transition-all duration-300
         ${isDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:scale-105 hover:shadow-2xl'}
         ${className}
@@ -27,42 +31,46 @@ const Card = ({
       {/* Card Back Design */}
       <div className={`
         absolute inset-0 rounded-xl shadow-lg
-        bg-gradient-to-br from-purple-900 to-indigo-900
-        border-4 border-purple-500/50
+        bg-gradient-to-br from-purple-900 via-purple-800 to-indigo-900
+        border-4 border-purple-400/60
         overflow-hidden
         transition-all duration-300
-        ${!isDisabled ? 'hover:border-purple-400 hover:shadow-purple-500/50' : ''}
+        ${!isDisabled ? 'hover:border-purple-300 hover:shadow-purple-400/70' : ''}
       `}>
-        {/* Mystical Pattern */}
-        <div className="absolute inset-0 opacity-20">
-          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern id="mystical-pattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-                <circle cx="10" cy="10" r="1" fill="currentColor" className="text-purple-300" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#mystical-pattern)" />
-          </svg>
-        </div>
+
+        {/* Mystical Dots Pattern - CSS only */}
+        <div
+          className="absolute inset-0 opacity-30"
+          style={{
+            backgroundImage: `radial-gradient(circle, #a78bfa 1px, transparent 1px)`,
+            backgroundSize: '16px 16px'
+          }}
+        ></div>
 
         {/* Center Symbol */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-4xl sm:text-5xl text-purple-300/80 animate-pulse">
+          <div className="text-7xl sm:text-8xl md:text-9xl text-purple-200 animate-pulse">
             ✧
           </div>
         </div>
 
         {/* Corner Decorations */}
-        <div className="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-purple-400/50"></div>
-        <div className="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-purple-400/50"></div>
-        <div className="absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-purple-400/50"></div>
-        <div className="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-purple-400/50"></div>
+        <div className="absolute top-4 left-4 w-6 h-6 border-t-2 border-l-2 border-purple-300/70"></div>
+        <div className="absolute top-4 right-4 w-6 h-6 border-t-2 border-r-2 border-purple-300/70"></div>
+        <div className="absolute bottom-4 left-4 w-6 h-6 border-b-2 border-l-2 border-purple-300/70"></div>
+        <div className="absolute bottom-4 right-4 w-6 h-6 border-b-2 border-r-2 border-purple-300/70"></div>
 
         {/* Inner Border */}
-        <div className="absolute inset-2 rounded-lg border border-purple-400/30"></div>
+        <div className="absolute inset-4 rounded-lg border-2 border-purple-300/40"></div>
+
+        {/* Additional Inner Border */}
+        <div className="absolute inset-6 rounded-lg border border-purple-400/20"></div>
 
         {/* Glow Effect */}
-        <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-purple-500/10 to-transparent pointer-events-none"></div>
+        <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-purple-400/20 via-transparent to-transparent pointer-events-none"></div>
+
+        {/* Center Glow */}
+        <div className="absolute inset-1/3 rounded-full bg-purple-500/10 blur-xl pointer-events-none"></div>
       </div>
     </div>
   );

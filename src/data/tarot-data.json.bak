@@ -6,9 +6,9 @@
       "arcana": "Major",
       "number": 0,
       "suit": "major",
-      "keywords": ["freedom", "faith", "inexperience", "innocence"],
-      "meaning_up": ["Freeing yourself from limitation", "Expressing joy and youthful vigor", "Being open-minded", "Taking a leap of faith", "Attuning yourself to your instincts"],
-      "meaning_rev": ["Being gullible and naive", "Taking unnecessary risks", "Failing to be serious when required", "Being silly or distracted"],
+      "keywords": ["자유", "믿음", "미숙함", "순수함"],
+      "meaning_up": ["제한에서 벗어나기", "기쁨과 젊은 활력 표현", "열린 마음 유지", "믿음의 도약", "자신의 본능에 귀 기울이기"],
+      "meaning_rev": ["잘 속고 나이브함", "불필요한 위험 감수", "필요할 때 진지하지 못함", "산만함"],
       "image_url": "/assets/images/major_00.webp"
     },
     {
@@ -17,9 +17,9 @@
       "arcana": "Major",
       "number": 1,
       "suit": "major",
-      "keywords": ["capability", "empowerment", "activity"],
-      "meaning_up": ["Taking appropriate action", "Receiving guidance from a higher power", "Becoming a channel of divine will", "Expressing masculine energy in appropriate and constructive ways"],
-      "meaning_rev": ["Inflating your own ego", "Abusing talents", "Manipulating or deceiving others", "Being too aggressive", "Using cheap illusions to dazzle others"],
+      "keywords": ["능력", "권한 부여", "활동"],
+      "meaning_up": ["적절한 조취 취하기", "상위 힘으로부터 인도받기", "신의 의지의 통로가 되기", "건설적인 방식으로 남성적 에너지 표현"],
+      "meaning_rev": ["자만심", "재능 남용", "타인을 조종하거나 속임", "지나치게 공격적임", "현혹시키기 위해 싼 가짜를 사용함"],
       "image_url": "/assets/images/major_01.webp"
     },
     {
@@ -28,9 +28,9 @@
       "arcana": "Major",
       "number": 2,
       "suit": "major",
-      "keywords": ["intuition", "reflection", "purity", "initiation"],
-      "meaning_up": ["Listening to your feelings and intuitions", "Exploring unconventional spirituality", "Keeping secrets", "Being receptive", "Reflecting instead of acting"],
-      "meaning_rev": ["Being aloof", "Obsessing on secrets and conspiracies", "Rejecting guidance from spirit or intuition", "Revealing all", "Ignoring gut feelings"],
+      "keywords": ["직관", "성찰", "순수", "입문"],
+      "meaning_up": ["자신의 감정과 직관에 귀 기울이기", "비전통적인 영성 탐구", "비밀 유지", "수용적인 태도", "행동 대신 성찰"],
+      "meaning_rev": ["냉담함", "비밀과 음모에 집착", "영적 인도나 직관 거부", "모든 것을 폭로함", "육감을 무시함"],
       "image_url": "/assets/images/major_02.webp"
     },
     {
@@ -193,9 +193,9 @@
       "arcana": "Major",
       "number": 17,
       "suit": "major",
-      "keywords": ["hope", "optimism", "openness", "certainty", "faith", "longing"],
-      "meaning_up": ["Hoping for the best", "Believing good things happen to good people", "Seeing events in the best possible light", "Adopting a generous spirit", "Seeking guidance from above"],
-      "meaning_rev": ["Denying unpleasant truths", "Denying personal accountability and saying, \"Things just happen!\"", "Ignoring signs and omens", "Preferring illusion to reality"],
+      "keywords": ["희망", "낙관주의", "개방성", "확신", "믿음", "갈망"],
+      "meaning_up": ["최선을 희망함", "좋은 사람에게 좋은 일이 일어날 것이라 믿음", "사건을 가능한 최선의 시각으로 바라봄", "관대한 마음을 가짐", "하늘의 인도를 구함"],
+      "meaning_rev": ["불쾌한 진실을 부정함", "개인적인 책임을 부정하고 \"그냥 일어난 일이야\"라고 말함", "징조와 예감을 무시함", "현실보다 환상을 선호함"],
       "image_url": "/assets/images/major_17.webp"
     },
     {

@@ -9,36 +9,24 @@
     </pattern>
   </defs>
 
-  <!-- Card Background -->
   <rect width="400" height="600" rx="20" ry="20" fill="url(#cardGradient)"/>
   <rect width="400" height="600" rx="20" ry="20" fill="url(#mysticalPattern)"/>
 
-  <!-- Border -->
   <rect x="15" y="15" width="370" height="570" rx="15" ry="15" fill="none" stroke="#c4b5fd" stroke-width="3" opacity="0.5"/>
-
-  <!-- Inner Border -->
   <rect x="25" y="25" width="350" height="550" rx="12" ry="12" fill="none" stroke="#a78bfa" stroke-width="2" opacity="0.3"/>
 
-  <!-- Corner Decorations -->
   <path d="M 35 35 L 55 35 M 35 35 L 35 55" stroke="#c4b5fd" stroke-width="3" opacity="0.6" fill="none"/>
   <path d="M 365 35 L 345 35 M 365 35 L 365 55" stroke="#c4b5fd" stroke-width="3" opacity="0.6" fill="none"/>
   <path d="M 35 565 L 55 565 M 35 565 L 35 545" stroke="#c4b5fd" stroke-width="3" opacity="0.6" fill="none"/>
   <path d="M 365 565 L 345 565 M 365 565 L 365 545" stroke="#c4b5fd" stroke-width="3" opacity="0.6" fill="none"/>
 
-  <!-- Center Symbol -->
   <g transform="translate(200, 300)">
-    <!-- Outer Circle -->
     <circle cx="0" cy="0" r="80" fill="none" stroke="#c4b5fd" stroke-width="2" opacity="0.4"/>
-    <!-- Middle Circle -->
     <circle cx="0" cy="0" r="60" fill="none" stroke="#a78bfa" stroke-width="2" opacity="0.5"/>
-    <!-- Inner Circle -->
     <circle cx="0" cy="0" r="40" fill="none" stroke="#8b5cf6" stroke-width="2" opacity="0.6"/>
-
-    <!-- Star -->
     <polygon points="0,-25 6,-8 24,-8 10,3 15,20 0,10 -15,20 -10,3 -24,-8 -6,-8" fill="#c4b5fd" opacity="0.7"/>
   </g>
 
-  <!-- Mystical Symbols -->
   <g opacity="0.3">
     <text x="60" y="150" font-size="40" fill="#c4b5fd">✧</text>
     <text x="320" y="150" font-size="40" fill="#c4b5fd">✧</text>

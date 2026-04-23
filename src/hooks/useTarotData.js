@@ -4,7 +4,7 @@
  */
 
 import { useState, useEffect } from 'react';
-import tarotData from '../data/tarot-data.json';
+import tarotData from '../data/tarot-data-ko.json';
 
 /**
  * 타로 데이터를 로드하고 관리하는 훅

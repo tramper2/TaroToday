@@ -1,52 +1,54 @@
+import { CARD_NAMES_KO } from '../data/translations';
+
 /**
  * Card Mapping Utility
  * 인덱스 기반으로 타로 카드 데이터와 이미지를 매핑하는 헬퍼 함수
  */
 
-// Wikimedia Commons Rider-Waite Tarot Image URLs
-const WIKIMEDIA_BASE_URL = 'https://upload.wikimedia.org/wikipedia/commons';
+// Vite base URL for proper asset paths
+const BASE_URL = import.meta.env.BASE_URL || '/';
 
-// Major Arcana 이미지 매핑 (0-21)
-const MAJOR_ARCANA_IMAGES = [
-  '0/0f/RWS_Tarot_00_Fool.jpg',      // 0 - The Fool
-  '3/33/RWS_Tarot_01_Magician.jpg',  // 1 - The Magician
-  '4/4d/RWS_Tarot_02_High_Priestess.jpg', // 2 - The High Priestess
-  'd/db/RWS_Tarot_03_Empress.jpg',   // 3 - The Empress
-  'c/c3/RWS_Tarot_04_Emperor.jpg',   // 4 - The Emperor
-  '9/9e/RWS_Tarot_05_Hierophant.jpg', // 5 - The Hierophant
-  '8/87/RWS_Tarot_06_Lovers.jpg',    // 6 - The Lovers
-  'f/f4/RWS_Tarot_07_Chariot.jpg',   // 7 - The Chariot
-  '7/7a/RWS_Tarot_08_Strength.jpg',  // 8 - Strength
-  'e/e4/RWS_Tarot_09_Hermit.jpg',    // 9 - The Hermit
-  '4/4f/RWS_Tarot_10_Wheel_of_Fortune.jpg', // 10 - Wheel of Fortune
-  '9/94/RWS_Tarot_11_Justice.jpg',   // 11 - Justice
-  'f/f1/RWS_Tarot_12_Hanged_Man.jpg', // 12 - The Hanged Man
-  '6/62/RWS_Tarot_13_Death.jpg',     // 13 - Death
-  '0/00/RWS_Tarot_14_Temperance.jpg', // 14 - Temperance
-  '0/0b/RWS_Tarot_15_Devil.jpg',     // 15 - The Devil
-  '3/3b/RWS_Tarot_16_Tower.jpg',     // 16 - The Tower
-  '9/9b/RWS_Tarot_17_Star.jpg',      // 17 - The Star
-  'b/bf/RWS_Tarot_18_Moon.jpg',      // 18 - The Moon
-  '7/79/RWS_Tarot_19_Sun.jpg',       // 19 - The Sun
-  'a/ac/RWS_Tarot_20_Judgement.jpg', // 20 - Judgement
-  'e/e8/RWS_Tarot_21_World.jpg'      // 21 - The World
-];
-
-// Wands 이미지 매핑
-const WANDS_IMAGES = [
-  'a/a6/RWS_Tarot_00_Fool.jpg',      // Ace - placeholder
-  '1/14/RWS_Tarot_Wands_01.jpg',     // 1 - Ace of Wands (placeholder)
-  '2/23/RWS_Tarot_Wands_02.jpg',     // 2 - Two of Wands (placeholder)
-  // ... 나머지 카드 이미지
-];
+// jsDelivr CDN for GitHub-hosted tarot images
+// From metabismuth/tarot-json repository
+const GITHUB_IMAGE_BASE_URL = 'https://cdn.jsdelivr.net/gh/metabismuth/tarot-json@master/cards';
 
 /**
- * Wikimedia Commons 이미지 URL을 가져옵니다
- * @param {string} imagePath - 이미지 경로
- * @returns {string} 전체 URL
+ * 코트 카드 이름을 숫자로 변환합니다
+ * @param {string} courtCard - page, knight, queen, king
+ * @returns {number} 11-14
  */
-const getWikimediaUrl = (imagePath) => {
-  return `${WIKIMEDIA_BASE_URL}/thumb/${imagePath}/400px-${imagePath.split('/').pop()}`;
+const courtCardToNumber = (courtCard) => {
+  const mapping = {
+    'page': 11,
+    'knight': 12,
+    'queen': 13,
+    'king': 14
+  };
+  return mapping[courtCard] || 0;
+};
+
+/**
+ * suit 문자열을 CDN 파일명 prefix로 변환합니다
+ * @param {string} suit - wands, cups, swords, pentacles
+ * @returns {string} w, c, s, p
+ */
+const suitToPrefix = (suit) => {
+  const mapping = {
+    'wands': 'w',
+    'cups': 'c',
+    'swords': 's',
+    'pentacles': 'p'
+  };
+  return mapping[suit] || '';
+};
+
+/**
+ * 숫자를 두 자리 문자열로 포맷팅합니다
+ * @param {number} num - 숫자
+ * @returns {string} 두 자리 문자열 (01, 02, ..., 14)
+ */
+const padTwo = (num) => {
+  return num.toString().padStart(2, '0');
 };
 
 /**
@@ -55,20 +57,30 @@ const getWikimediaUrl = (imagePath) => {
  * @returns {string} 이미지 URL
  */
 export const getCardImagePath = (cardData) => {
-  if (!cardData) return '/assets/images/card-back.svg';
+  if (!cardData) return `${BASE_URL}assets/images/card-back.svg`;
 
   const { suit, number } = cardData;
-  let imagePath;
+  let imageUrl;
 
   if (suit === 'major') {
-    // Major Arcana
-    imagePath = MAJOR_ARCANA_IMAGES[number] || MAJOR_ARCANA_IMAGES[0];
-    return getWikimediaUrl(imagePath);
+    // Major Arcana: m00.jpg - m21.jpg
+    imageUrl = `${GITHUB_IMAGE_BASE_URL}/m${padTwo(number)}.jpg`;
   } else {
-    // Minor Arcana - 임시로 로컬 placeholder 사용
-    // 나중에 실제 이미지로 교체 필요
-    return `/assets/images/${suit}_${number}.svg`;
+    // Minor Arcana: {suit_letter}{number}.jpg
+    // 숫자 카드 (Ace=1, 2-10)와 코트 카드 (Page=11, Knight=12, Queen=13, King=14)
+    let cardNumber;
+    if (typeof number === 'string') {
+      // 코트 카드
+      cardNumber = courtCardToNumber(number);
+    } else {
+      // 숫자 카드
+      cardNumber = number;
+    }
+    const prefix = suitToPrefix(suit);
+    imageUrl = `${GITHUB_IMAGE_BASE_URL}/${prefix}${padTwo(cardNumber)}.jpg`;
   }
+
+  return imageUrl;
 };
 
 /**
@@ -78,26 +90,50 @@ export const getCardImagePath = (cardData) => {
 export const getAllCardImagePaths = () => {
   const paths = [];
 
-  // Major Arcana - Wikimedia URLs
-  MAJOR_ARCANA_IMAGES.forEach(img => {
-    paths.push(getWikimediaUrl(img));
-  });
+  // Major Arcana (m00.jpg - m21.jpg)
+  for (let i = 0; i <= 21; i++) {
+    paths.push(`${GITHUB_IMAGE_BASE_URL}/m${padTwo(i)}.jpg`);
+  }
 
-  // Minor Arcana - 임시 placeholder (나중에 실제 이미지로 교체)
-  const suits = ['wands', 'cups', 'swords', 'pentacles'];
-  suits.forEach(suit => {
-    for (let i = 1; i <= 10; i++) {
-      paths.push(`/assets/images/${suit}_${i}.svg`);
-    }
-    ['page', 'knight', 'queen', 'king'].forEach(rank => {
-      paths.push(`/assets/images/${suit}_${rank}.svg`);
-    });
-  });
+  // Wands (w01.jpg - w14.jpg)
+  for (let i = 1; i <= 14; i++) {
+    paths.push(`${GITHUB_IMAGE_BASE_URL}/w${padTwo(i)}.jpg`);
+  }
+
+  // Cups (c01.jpg - c14.jpg)
+  for (let i = 1; i <= 14; i++) {
+    paths.push(`${GITHUB_IMAGE_BASE_URL}/c${padTwo(i)}.jpg`);
+  }
+
+  // Swords (s01.jpg - s14.jpg)
+  for (let i = 1; i <= 14; i++) {
+    paths.push(`${GITHUB_IMAGE_BASE_URL}/s${padTwo(i)}.jpg`);
+  }
+
+  // Pentacles (p01.jpg - p14.jpg)
+  for (let i = 1; i <= 14; i++) {
+    paths.push(`${GITHUB_IMAGE_BASE_URL}/p${padTwo(i)}.jpg`);
+  }
 
   // Card back
-  paths.push('/assets/images/card-back.svg');
+  paths.push(`${BASE_URL}assets/images/card-back.svg`);
 
   return paths;
+};
+
+/**
+ * 카드의 한국어 이름을 가져옵니다
+ * @param {Object} cardData - 카드 데이터 객체
+ * @returns {string} 한국어 이름
+ */
+export const getCardNameKo = (cardData) => {
+  if (!cardData) return '알 수 없는 카드';
+
+  if (cardData.suit === 'major') {
+    return CARD_NAMES_KO[cardData.number] || cardData.name;
+  }
+
+  return CARD_NAMES_KO[cardData.name] || cardData.name;
 };
 
 /**

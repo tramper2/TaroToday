@@ -4,6 +4,7 @@
  */
 
 import html2canvas from 'html2canvas';
+import { getCardNameKo, getCardKeywords } from './cardMapper';
 
 /**
  * 엘리먼트를 이미지로 캡처합니다
@@ -100,7 +101,9 @@ export const shareContent = async (shareData) => {
  */
 export const shareTarotResult = async (cardData, isReversed) => {
   const orientation = isReversed ? '역방향' : '정방향';
-  const text = `🔮 오늘의 타로 카드\n\n${cardData.name} (${orientation})\n\n"${cardData.keywords.join(', ')}"\n\n#TarotToday #오늘의운세`;
+  const cardName = getCardNameKo(cardData);
+  const keywords = getCardKeywords(cardData);
+  const text = `🔮 오늘의 타로 카드\n\n${cardName} (${orientation})\n\n"${keywords.join(', ')}"\n\n#TarotToday #오늘의운세`;
 
   if (navigator.share) {
     return await shareContent({

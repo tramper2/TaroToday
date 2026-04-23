@@ -5,7 +5,7 @@
 
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { getCardImagePath } from '../../utils/cardMapper';
+import { getCardImagePath, getCardNameKo } from '../../utils/cardMapper';
 
 const CardDisplay = ({ card, isReversed = false }) => {
   const [isFlipped, setIsFlipped] = useState(false);
@@ -89,7 +89,7 @@ const CardDisplay = ({ card, isReversed = false }) => {
                 )}
                 <img
                   src={imagePath}
-                  alt={card.name}
+                  alt={getCardNameKo(card)}
                   className={`max-w-full max-h-full object-contain transition-opacity duration-300 ${
                     imageLoaded ? 'opacity-100' : 'opacity-0'
                   }`}
@@ -100,7 +100,7 @@ const CardDisplay = ({ card, isReversed = false }) => {
               {/* Card Name Overlay */}
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
                 <p className="text-white text-center font-bold text-lg drop-shadow-lg">
-                  {card.name}
+                  {getCardNameKo(card)}
                 </p>
                 <p className="text-purple-300 text-center text-sm">
                   {isReversed ? '역방향' : '정방향'}

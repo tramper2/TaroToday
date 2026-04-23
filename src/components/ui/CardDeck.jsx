@@ -13,23 +13,23 @@ const CardDeck = ({ onCardSelect, isDisabled = false }) => {
   const cards = Array.from({ length: cardCount }, (_, i) => i);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4">
+    <div className="flex flex-col items-center justify-center min-h-screen p-4 relative">
       {/* Title */}
-      <h1 className="text-3xl md:text-5xl font-bold text-purple-200 mb-4 text-center text-shadow-mystical">
+      <h1 className="text-3xl md:text-5xl font-bold text-purple-200 mb-4 text-center text-shadow-mystical z-10">
         오늘의 운세를 확인하세요
       </h1>
-      <p className="text-purple-300/80 mb-12 text-center text-lg">
+      <p className="text-purple-300/80 mb-12 text-center text-lg z-10">
         카드를 선택하여 당신의 운세를 발견하세요
       </p>
 
       {/* Card Deck */}
-      <div className="relative flex items-center justify-center gap-2 md:gap-4 perspective-1000">
+      <div className="relative flex items-center justify-center -space-x-12 sm:-space-x-16 md:-space-x-20 z-10 w-full px-4" style={{ perspective: '1000px' }}>
         {cards.map((index) => (
           <div
             key={index}
-            className="transition-all duration-500 hover:-translate-y-2"
+            className="transition-all duration-500 hover:-translate-y-2 flex-shrink-0 scale-75 sm:scale-90 md:scale-100"
             style={{
-              transform: `rotate(${(index - Math.floor(cardCount / 2)) * 3}deg)`,
+              transform: `rotate(${(index - Math.floor(cardCount / 2)) * 10}deg)`,
               transformOrigin: 'center bottom'
             }}
           >
@@ -44,13 +44,13 @@ const CardDeck = ({ onCardSelect, isDisabled = false }) => {
 
       {/* Instruction */}
       {!isDisabled && (
-        <p className="mt-12 text-purple-400/60 text-sm animate-pulse">
+        <p className="mt-16 text-purple-400/60 text-sm md:text-base animate-pulse z-10">
           ✨ 카드를 클릭하세요 ✨
         </p>
       )}
 
       {/* Floating Particles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {[...Array(15)].map((_, i) => (
           <div
             key={i}

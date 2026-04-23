@@ -3,9 +3,9 @@
  * 카드 결과 표시 컴포넌트
  */
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { getCardImagePath, getCardMeaning, getCardKeywords } from '../../utils/cardMapper';
+import { getCardImagePath, getCardMeaning, getCardKeywords, getCardNameKo } from '../../utils/cardMapper';
 import { HiShare, HiRefresh } from 'react-icons/hi';
 
 const ResultCard = ({ card, isReversed, onReset }) => {
@@ -18,8 +18,21 @@ const ResultCard = ({ card, isReversed, onReset }) => {
 
   const imagePath = getCardImagePath(card);
   const meaning = getCardMeaning(card, isReversed);
+  const [luckyNumbers, setLuckyNumbers] = useState([]);
   const keywords = getCardKeywords(card);
   const orientation = isReversed ? '역방향' : '정방향';
+
+  // 로또 번호 생성 (1~46 중 3개)
+  useEffect(() => {
+    const numbers = [];
+    while (numbers.length < 3) {
+      const num = Math.floor(Math.random() * 46) + 1;
+      if (!numbers.includes(num)) {
+        numbers.push(num);
+      }
+    }
+    setLuckyNumbers(numbers.sort((a, b) => a - b));
+  }, []);
 
   const handleShare = async (type) => {
     switch (type) {
@@ -71,7 +84,7 @@ const ResultCard = ({ card, isReversed, onReset }) => {
             {/* Card Name Overlay */}
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4" style={{ transform: isReversed ? 'rotate(180deg)' : 'rotate(0deg)', transformOrigin: 'center bottom' }}>
               <p className="text-white text-center font-bold text-lg drop-shadow-lg">
-                {card.name}
+                {getCardNameKo(card)}
               </p>
               <p className="text-purple-300 text-center text-sm">
                 {orientation}
@@ -112,20 +125,42 @@ const ResultCard = ({ card, isReversed, onReset }) => {
             <h3 className="text-purple-300 font-semibold mb-3 text-sm uppercase tracking-wide">
               해석
             </h3>
-            <ul className="space-y-2">
-              {meaning.map((item, index) => (
+            <ul className="space-y-4 mb-10">
+              {meaning.map((text, index) => (
                 <motion.li
                   key={index}
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.4 + index * 0.1, duration: 0.4 }}
-                  className="flex items-start text-purple-100"
+                  transition={{ delay: 0.6 + index * 0.1 }}
+                  className="flex items-start text-purple-100/90 text-sm leading-relaxed"
                 >
-                  <span className="mr-2 text-purple-400">✦</span>
-                  <span className="text-sm md:text-base">{item}</span>
+                  <span className="text-purple-400 mr-3 mt-1">✦</span>
+                  {text}
                 </motion.li>
               ))}
             </ul>
+
+            {/* Lucky Numbers Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.2 }}
+              className="bg-gradient-to-r from-purple-900/40 to-indigo-900/40 rounded-xl p-6 border border-purple-500/20 text-center mb-8"
+            >
+              <h4 className="text-purple-300 text-xs font-semibold uppercase tracking-widest mb-3">
+                오늘의 행운로또 번호
+              </h4>
+              <div className="flex justify-center gap-3">
+                {luckyNumbers.map((num, i) => (
+                  <div
+                    key={i}
+                    className="w-10 h-10 rounded-full bg-gradient-to-br from-yellow-400 to-amber-600 text-purple-900 font-bold flex items-center justify-center shadow-lg shadow-yellow-500/20"
+                  >
+                    {num}
+                  </div>
+                ))}
+              </div>
+            </motion.div>
           </div>
 
           {/* Card Info */}
