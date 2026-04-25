@@ -22,11 +22,11 @@ const ResultCard = ({ card, isReversed, onReset }) => {
   const keywords = getCardKeywords(card);
   const orientation = isReversed ? '역방향' : '정방향';
 
-  // 로또 번호 생성 (1~46 중 3개)
+  // 로또 번호 생성 (1~45 중 3개)
   useEffect(() => {
     const numbers = [];
     while (numbers.length < 3) {
-      const num = Math.floor(Math.random() * 46) + 1;
+      const num = Math.floor(Math.random() * 45) + 1;
       if (!numbers.includes(num)) {
         numbers.push(num);
       }
